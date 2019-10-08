@@ -4,17 +4,14 @@ import matplotlib.pyplot as plt
 
 
 def get_MNIST_Keras():
-    num_train = 60000
-    num_test = 10000
-    height, width = 28, 28
-    num_classes = 10
+    num_categories = 10
     (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
-    X_train = X_train.reshape(num_train, height * width)
-    X_test = X_test.reshape(num_test, height * width)
+    X_train = X_train.reshape(X_train.shape[0], X_train.shape[1]*X_train.shape[2])
+    X_test = X_test.reshape(X_test.shape[0], X_test.shape[1]*X_test.shape[2])
     X_train = X_train.astype('float32')
     X_test = X_test.astype('float32')
-    Y_train = np_utils.to_categorical(Y_train, num_classes)
-    Y_test = np_utils.to_categorical(Y_test, num_classes)
+    Y_train = np_utils.to_categorical(Y_train, num_categories)
+    Y_test = np_utils.to_categorical(Y_test, num_categories)
     return (X_train, Y_train), (X_test, Y_test)
 
 
