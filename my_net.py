@@ -6,84 +6,23 @@ from datetime import datetime
 
 class NeuralNetwork:
     def __init__(self, nodes_hidden=30, nodes_output=10, lr_hidden=0.4, lr_output=0.1):
-        self.layers_size = [0, nodes_hidden, nodes_output]
-        self.lr_hidden = lr_hidden
-        self.lr_output = lr_output
-        self.parameters = {}
-        self.n = 0
-        self.batch_size = 0
-
-    def ReLU(self, X):
-        return X * (X > 0)
-
-    def ReLU_derivative(self, X):
-        return 1. * (X > 0)
-
-    def Softmax(self, X):
-        expX = np.exp(X)
-        return expX / expX.sum(axis=0, keepdims=True)
-
-    def initialize_parameters(self):
-        sigma_1 = 2. / np.sqrt(self.layers_size[0]+self.layers_size[1])
-        sigma_2 = 2. / np.sqrt(self.layers_size[1] + self.layers_size[2])
-        self.parameters['W1'] = sigma_1 * np.random.randn(self.layers_size[1], self.layers_size[0])
-        self.parameters['W2'] = sigma_2 * np.random.randn(self.layers_size[2], self.layers_size[1])
+        self._layers_size = [0, nodes_hidden, nodes_output]
+        self._lr_hidden = lr_hidden
+        self._lr_output = lr_output
+        self._W1 = np.array([])
+        self._W2 = np.array([])
+        self._n = 0
+        self._batch_size = 0
 
     def forward(self, X):
         X = X.T
-        WX = self.parameters['W1'].dot(X)
-        X = self.ReLU(WX)
+        WX = self._W1.dot(X)
+        X = self._ReLU(WX)
 
-        WX = self.parameters['W2'].dot(X)
-        X = self.Softmax(WX)
+        WX = self._W2.dot(X)
+        X = self._Softmax(WX)
 
         return X
-
-    def fit_forward(self, X):
-        storage = {}
-
-        X = X.T
-        WX = self.parameters['W1'].dot(X)
-        X = self.ReLU(WX)
-        storage['X1'] = X
-        storage['WX1'] = WX
-
-        WX = self.parameters['W2'].dot(X)
-        X = self.Softmax(WX)
-        storage['X2'] = X
-        storage['W2'] = self.parameters['W2']
-
-        return X, storage
-
-    def calculate_derivatives(self, X0, Y, storage):
-        delta_2 = Y.T - storage['X2']  # Y - U
-        dW2 = delta_2.dot(storage['X1'].T) / self.batch_size
-
-        delta_1 = storage['W2'].T.dot(delta_2) * self.ReLU_derivative(storage['WX1'])
-        dW1 = delta_1.dot(X0) / self.batch_size
-
-        return dW1, dW2
-
-    def fit(self, X, Y, batch_size=128, number_epochs=1000):
-        np.random.seed(1)
-        self.batch_size = batch_size
-        self.n = X.shape[0]
-        self.layers_size[0] = X.shape[1]
-        self.initialize_parameters()
-
-        epoch_percent = 0
-        for epoch in range(number_epochs):
-            X, Y = self.shuffle_arrays_together(X, Y)
-            for i in range(0, self.n, self.batch_size):
-                U, storage = self.fit_forward(X[i:i + self.batch_size])
-                dW1, dW2 = self.calculate_derivatives(X[i:i + self.batch_size], Y[i:i + self.batch_size], storage)
-                self.parameters['W1'] = self.parameters['W1'] + self.lr_hidden * dW1
-                self.parameters['W2'] = self.parameters['W2'] + self.lr_output * dW2
-
-            if epoch % round(number_epochs / 10) == 0:
-                epoch_percent += 10
-                accuracy, crossentropy = self.predict(X, Y)
-                print('{}% Train Accuracy: {}; Train loss: {}'.format(epoch_percent, accuracy, crossentropy))
 
     def predict(self, X, Y):
         U = self.forward(X)
@@ -92,9 +31,77 @@ class NeuralNetwork:
         U = np.argmax(U, axis=0)
         Y = np.argmax(Y, axis=1)
         accuracy = (U == Y).mean()
+
         return crossentropy, accuracy
 
-    def shuffle_arrays_together(self, a, b):
+    def fit(self, X, Y, batch_size=128, number_epochs=1000):
+        np.random.seed(1)
+        self._batch_size = batch_size
+        self._n = X.shape[0]
+        self._layers_size[0] = X.shape[1]
+        self._initialize_parameters()
+
+        epoch_percent = 0
+        for epoch in range(number_epochs):
+            X, Y = self._shuffle_arrays_together(X, Y)
+            for i in range(0, self._n, self._batch_size):
+                U, storage = self._fit_forward(X[i:i + self._batch_size])
+                dW1, dW2 = self._calculate_derivatives(X[i:i + self._batch_size], Y[i:i + self._batch_size], storage)
+                self._W1 = self._W1 + self._lr_hidden * dW1
+                self._W2 = self._W2 + self._lr_output * dW2
+
+            if epoch % round(number_epochs / 10) == 0:
+                epoch_percent += 10
+                accuracy, crossentropy = self.predict(X, Y)
+                print('{}% Train Accuracy: {}; Train loss: {}'.format(epoch_percent, accuracy, crossentropy))
+
+    def _initialize_parameters(self):
+        sigma_1 = 2. / np.sqrt(self._layers_size[0]+self._layers_size[1])
+        sigma_2 = 2. / np.sqrt(self._layers_size[1] + self._layers_size[2])
+        self._W1 = sigma_1 * np.random.randn(self._layers_size[1], self._layers_size[0])
+        self._W2 = sigma_2 * np.random.randn(self._layers_size[2], self._layers_size[1])
+
+
+    def _fit_forward(self, X):
+        storage = {}
+
+        X = X.T
+        WX = self._W1.dot(X)
+        X = self._ReLU(WX)
+        storage['X1'] = X
+        storage['WX1'] = WX
+
+        WX = self._W2.dot(X)
+        X = self._Softmax(WX)
+        storage['X2'] = X
+        storage['W2'] = self._W2
+
+        return X, storage
+
+    def _calculate_derivatives(self, X0, Y, storage):
+        delta_2 = Y.T - storage['X2']  # Y - U
+        dW2 = delta_2.dot(storage['X1'].T) / self._batch_size
+
+        delta_1 = storage['W2'].T.dot(delta_2) * self._ReLU_derivative(storage['WX1'])
+        dW1 = delta_1.dot(X0) / self._batch_size
+
+        return dW1, dW2
+
+    @staticmethod
+    def _ReLU(X):
+        return X * (X > 0)
+
+    @staticmethod
+    def _ReLU_derivative(X):
+        return 1. * (X > 0)
+
+    @staticmethod
+    def _Softmax(X):
+        expX = np.exp(X)
+        return expX / expX.sum(axis=0, keepdims=True)
+
+    @staticmethod
+    def _shuffle_arrays_together(a, b):
         random_state = np.random.get_state()
         np.random.shuffle(a)
         np.random.set_state(random_state)
