@@ -24,10 +24,16 @@ class NeuralNetwork:
         return expX / expX.sum(axis=0, keepdims=True)
 
     def initialize_parameters(self):
+        sigma_1 = 2. / np.sqrt(self.layers_size[0]+self.layers_size[1])
+        sigma_2 = 2. / np.sqrt(self.layers_size[1] + self.layers_size[2])
+        self.parameters['W1'] = sigma_1 * np.random.randn(self.layers_size[1], self.layers_size[0])
+        self.parameters['W2'] = sigma_2 * np.random.randn(self.layers_size[2], self.layers_size[1])
+        '''
         self.parameters['W1'] = 2 * np.random.randn(self.layers_size[1], self.layers_size[0]) / \
                                 np.sqrt(self.layers_size[0])
         self.parameters['W2'] = 2 * np.random.randn(self.layers_size[2], self.layers_size[1]) / \
                                 np.sqrt(self.layers_size[1])
+        '''
 
     def forward(self, X):
         X = X.T
@@ -55,7 +61,7 @@ class NeuralNetwork:
 
         return X, storage
 
-    def calculate_derivatives(self, X0, Y, storage):  # X0 - вход на сеть
+    def calculate_derivatives(self, X0, Y, storage):
         delta_2 = Y.T - storage['X2']  # Y - U
         dW2 = delta_2.dot(storage['X1'].T) / self.batch_size
 
@@ -73,13 +79,13 @@ class NeuralNetwork:
 
         epoch_percent = 0
         for epoch in range(number_epochs):
-            cost = 0.0
             X, Y = self.shuffle_arrays_together(X, Y)
             for i in range(0, self.n, self.batch_size):
                 U, storage = self.fit_forward(X[i:i + self.batch_size])
                 dW1, dW2 = self.calculate_derivatives(X[i:i + self.batch_size], Y[i:i + self.batch_size], storage)
                 self.parameters['W1'] = self.parameters['W1'] + self.lr_hidden * dW1
                 self.parameters['W2'] = self.parameters['W2'] + self.lr_output * dW2
+
             if epoch % round(number_epochs / 10) == 0:
                 epoch_percent += 10
                 accuracy, crossentropy = self.predict(X, Y)
