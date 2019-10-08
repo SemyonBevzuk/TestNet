@@ -84,3 +84,7 @@ def main(args):
 if __name__ == '__main__':
     parser = create_parser()
     main(parser.parse_args())
+
+'''
+python main.py --net_type my --hidden_size 30 --lr_hidden 0.1 --lr_output -0.1 --batch_size 128 --number_epochs 20 --compare_nets
+'''

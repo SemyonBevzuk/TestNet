@@ -1,6 +1,5 @@
 from keras.datasets import mnist
 from keras.utils import np_utils
-import matplotlib.pyplot as plt
 
 
 def get_MNIST_Keras():
