@@ -28,12 +28,6 @@ class NeuralNetwork:
         sigma_2 = 2. / np.sqrt(self.layers_size[1] + self.layers_size[2])
         self.parameters['W1'] = sigma_1 * np.random.randn(self.layers_size[1], self.layers_size[0])
         self.parameters['W2'] = sigma_2 * np.random.randn(self.layers_size[2], self.layers_size[1])
-        '''
-        self.parameters['W1'] = 2 * np.random.randn(self.layers_size[1], self.layers_size[0]) / \
-                                np.sqrt(self.layers_size[0])
-        self.parameters['W2'] = 2 * np.random.randn(self.layers_size[2], self.layers_size[1]) / \
-                                np.sqrt(self.layers_size[1])
-        '''
 
     def forward(self, X):
         X = X.T
@@ -129,17 +123,3 @@ if __name__ == '__main__':
     print('Test loss:', score_test[0])
     print('Test accuracy:', score_test[1])
 
-
-'''
-30, 0.1, 0.1, 20
-Train Accuracy: 0.9750833333333333
-Test Accuracy: 0.965
-Delta time =  0:00:13.629306
-'''
-'''
-на 256 нейронов
-Train Accuracy: 0.9915166666666667
-Test Accuracy: 0.9772
-
-Delta time =  0:01:01.758172
-'''
