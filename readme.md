@@ -47,10 +47,21 @@
 
 ## Функция ошибки
 В качестве функции ошибки рассмотрим кросс-энтропию:
-![](https://latex.codecogs.com/svg.latex?E=\sum\limits_{j=1}^M y_j\ln{u_j})
+![](https://latex.codecogs.com/svg.latex?E(w)=\sum\limits_{j=1}^My_j\ln{u_j})
 
-Где *y* - выход сети, *u* - ожидаемый выход. 
+![](https://latex.codecogs.com/svg.latex?u_j&space;=&space;\phi^{(2)}(\sum_{s=0}^{K}w_{j,s}^{(2)}\phi^{(1)}(\sum_{i=0}^{N}&space;w_{s,&space;i}^{(1)}&space;x_i)))
 
+Где *y* - выход сети, *u* - ожидаемый выход, *v* - выход скрытого слоя, *x* - вход сети, *M* - число нейронов на выходном слое,
+*K* - число нейронов на скрытом слое, *N* - число нейронов на входне сети, ![](https://latex.codecogs.com/svg.latex?\inline&space;w_{j,s}^{(2)}) -
+ веса выходного слоя, ![](https://latex.codecogs.com/svg.latex?\inline&space;w_{s,i}^{(1)}) -
+ веса скрытого слоя.
+
+## Производыне функции ошибки
+### По выходному слою
+ 
+![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{j,s}^{(2)}}=\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial{w_{j,s}^{(2)}}}&space;=&space;\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial{u_j}}&space;\frac{\partial&space;u_j}{\partial&space;w_{j,s}^{(2)}}=...)
+
+![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;\ln&space;u_j}{\partial&space;u_j}&space;=&space;\frac{1}{u_j})
 
 $'\sqrt{2}'$
 
