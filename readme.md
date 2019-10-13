@@ -17,7 +17,7 @@
 Для удобства выкладок сделаем некоторое преобразование. Внесем смещение в сумму с новым значением синапса ![](https://latex.codecogs.com/svg.latex?x_0=1).
 Тогда модель нейрона можно запсиать в следующем виде:
 
-![](https://latex.codecogs.com/svg.latex?u_k=\sum\limits_{j=0}^n w_{k,j}x_j\qquad&space;y_k=\phi(u_k))
+![](https://latex.codecogs.com/svg.latex?u_k=\sum\limits_{j=0}^nw_{k,j}x_j\qquad&space;y_k=\phi(u_k))
 
 ## Предобработка данных
 Входные данные нормируются, представляются как матрицы и вектора.
@@ -36,7 +36,7 @@
 ### На выходном слое
 На выходе будем использовать функцию Softmax:
 
-![](https://latex.codecogs.com/svg.latex?\phi^{(2)}(u_j)=\frac{e^{u_j}}{\sum\limits_{i=0}^n e^{u_i}})
+![](https://latex.codecogs.com/svg.latex?\phi^{(2)}(u_j)=\frac{e^{u_j}}{\sum\limits_{i=0}^ne^{u_i}})
 
 Её производные:
 
