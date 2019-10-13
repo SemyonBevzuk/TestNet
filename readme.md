@@ -76,7 +76,7 @@
 
 ![](https://latex.codecogs.com/svg.latex?...=\left&space;(&space;y_j&space;\frac{1}{u_j}&space;u_j&space;(1-u_j)&space;&plus;&space;\sum_{j=0}^{M}&space;y_j&space;\frac{1}{u_j}(-u_ju_j)))&space;\right&space;)v_s&space;=&space;\left&space;(&space;y_j&space;-&space;y_ju_j&space;-&space;\sum_{j=0}^{M}u_j&space;y_j)&space;\right&space;)v_s&space;=&space;(y_j&space;-&space;u_j)&space;v_s&space;=&space;\delta_j^{(2)}v_s)
 
-![](https://latex.codecogs.com/svg.latex?\left(y_j\frac{1}{u_j}u_j(1-u_j)&plus;\sum_{j=0}^{M}y_j\frac{1}{u_j}(-u_ju_j))\right)v_s)
+![](https://latex.codecogs.com/svg.latex?\left(y_j\frac{1}{u_j}u_j(1-u_j)&plus;\sum_{j=0}^{M}y_j\frac{1}{u_j}(-u_ju_j)\right)v_s)
 
 
 Отлично, мы нашли производную функции ошибки по выходному слою.
