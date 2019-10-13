@@ -78,7 +78,6 @@ class NeuralNetwork:
         WX = self._W2.dot(X) + self._b2
         X = self._Softmax(WX)
         storage['X2'] = X
-        storage['W2'] = self._W2
 
         return X, storage
 
@@ -87,7 +86,7 @@ class NeuralNetwork:
         dW2 = delta_2.dot(storage['X1'].T) / self._batch_size
         db2 = np.sum(delta_2, axis=1, keepdims=True) / self._batch_size
 
-        delta_1 = storage['W2'].T.dot(delta_2) * self._ReLU_derivative(storage['WX1'])
+        delta_1 = self._W2.T.dot(delta_2) * self._ReLU_derivative(storage['WX1'])
         dW1 = delta_1.dot(X0) / self._batch_size
         db1 = np.sum(delta_1, axis=1, keepdims=True) / self._batch_size
 
