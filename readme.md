@@ -1,6 +1,6 @@
 # Лабораторная работа №1
 Реализована двуслойная полносвязная нейронная сеть
-для распознования цифр из базы MNIST.    
+для распознования цифр из базы MNIST. Режим обучения - пакетный.    
 
     Входной слой - изображение из базы MNIST
     Скрытый слой - функция активации ReLU
@@ -93,8 +93,26 @@
 
 Нашли производную функции ошибки по скрытому слою.
 
+## Прямой проход
+На вход принимаем нормированные изображения в форме вектора. Для каждого нейрона скрытого слоя вычисляем взвешенную сумму
+по всем входным нейронам и вычисляем функцию активации ReLU.
 
+![](https://latex.codecogs.com/svg.latex?v_s&space;=&space;\phi^{(1)}\left&space;(\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;))
 
+После этого результат работы скрытого слоя умножаем на веса и пропускаем через функцию активации Softmax.
+
+![](https://latex.codecogs.com/svg.latex?u_j&space;=&space;\phi^{(2)}\left&space;(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s&space;\right&space;))
+
+Выходной слой даёт вектор значений достоверности.
+
+## Обратное распространение
+
+1. Прямой проход по сети
+    * Вычисляем ![](https://latex.codecogs.com/svg.latex?\inline&space;v_s,u_s)
+    * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\phi^{(1)}(\sum_{i=0}^{N}w_{s,i}^{(1)}x_i))
+    * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i)
+    * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\phi^{(2)}(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s))
+    
 
 ![](https://latex.codecogs.com/svg.latex?2)
 
