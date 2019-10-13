@@ -9,6 +9,7 @@
     
 ## Математическая модель нейрона
 Математическая модель нейрона имеет следующий вид:
+
 ![](https://latex.codecogs.com/svg.latex?u_k=b_k&plus;\sum\limits_{j=1}^nw_{k,j}x_j\qquad&space;y_k=\phi(u_k))
 
 Где ![](https://latex.codecogs.com/svg.latex?\phi) - функция активации, ![](https://latex.codecogs.com/svg.latex?b_k) - 
@@ -40,9 +41,9 @@
 
 Её производные:
 
-![](https://latex.codecogs.com/svg.latex?\frac{\partial\phi^{(2)}(u_j)}{\partial u_j}=\phi^{(2)}(u_j)(1-\phi^{(2)}(u_j)))
+![](https://latex.codecogs.com/svg.latex?\frac{\partial\phi^{(2)}(u_j)}{\partial{u_j}}=\phi^{(2)}(u_j)(1-\phi^{(2)}(u_j)))
 
-![](https://latex.codecogs.com/svg.latex?\frac{\partial\phi^{(2)}(u_j)}{\partial u_i}=-\phi^{(2)}(u_j)\phi^{(2)}(u_i))
+![](https://latex.codecogs.com/svg.latex?\frac{\partial\phi^{(2)}(u_j)}{\partial{u_i}}=-\phi^{(2)}(u_j)\phi^{(2)}(u_i))
 
 ## Функция ошибки
 В качестве функции ошибки рассмотрим кросс-энтропию:
