@@ -10,10 +10,8 @@ def create_parser():
                         help='Выбор сети для запуска. Собственная - my, фреймворк - keras')
     parser.add_argument('--hidden_size', type=int, default=30,
                         help='Число узлов на скрытом слое.')
-    parser.add_argument('--lr_hidden', type=float, default=0.1,
-                        help='Скорость обучения на скрытом слое (только для собственной реализации) [0, 1].')
-    parser.add_argument('--lr_output', type=float, default=0.1,
-                        help='Скорость обучения на выходном слое или всей сети для keras.')
+    parser.add_argument('--lr', type=float, default=0.1,
+                        help='Скорость обучения сети [0, 1].')
     parser.add_argument('--batch_size', type=int, default=128,
                         help='Размер пакета для обучения.')
     parser.add_argument('--number_epochs', type=int, default=20,
@@ -26,8 +24,7 @@ def create_parser():
 def print_parameters(args):
     print('\n\tParameters')
     print('hidden_size = ', args.hidden_size)
-    print('lr_hidden = ', args.lr_hidden)
-    print('lr_output = ', args.lr_output)
+    print('lr = ', args.lr)
     print('batch_size =', args.batch_size)
     print('number_epochs = ', args.number_epochs)
     print()
@@ -35,13 +32,13 @@ def print_parameters(args):
 
 def run_my_net(args):
     score_train, score_test, delta_time = my_net.fit_and_test_net_on_MNIST(
-        args.hidden_size, args.batch_size, args.number_epochs, args.lr_hidden, args.lr_output)
+        args.hidden_size, args.batch_size, args.number_epochs, args.lr)
     return score_train, score_test, delta_time
 
 
 def run_keras_net(args):
     score_train, score_test, delta_time = keras_net.fit_and_test_net_on_MNIST(
-        args.hidden_size, args.batch_size, args.number_epochs, args.lr_hidden)
+        args.hidden_size, args.batch_size, args.number_epochs, args.lr)
     return score_train, score_test, delta_time
 
 
@@ -86,5 +83,6 @@ if __name__ == '__main__':
     main(parser.parse_args())
 
 '''
-python main.py --net_type my --hidden_size 30 --lr_hidden 0.1 --lr_output -0.1 --batch_size 128 --number_epochs 20 --compare_nets
+python main.py --net_type my --hidden_size 30 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
+python main.py --net_type my --hidden_size 256 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
 '''
