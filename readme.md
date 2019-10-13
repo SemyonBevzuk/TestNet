@@ -70,9 +70,29 @@
 
 Первый множитель - это производная Softmax по аргументу. Она может принимать два значения, это зависит от слагаемого,
 по которому мы берем производную. Если он в числителе: ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial\phi^{(2)}(u_j)}{\partial{u_j}}=\phi^{(2)}(u_j)(1-\phi^{(2)}(u_j))).
-Если в знаменателе: ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial\phi^{(2)}(u_j)}{\partial{u_i}}=-\phi^{(2)}(u_j)\phi^{(2)}(u_i))
+Если в знаменателе: ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial\phi^{(2)}(u_j)}{\partial{u_i}}=-\phi^{(2)}(u_j)\phi^{(2)}(u_i)).
 
-$'\sqrt{2}'$
+Вынесем из суммы слагаемое, которое соответствует производной по числителю Softmax. Учтем, что ![](https://latex.codecogs.com/svg.latex?\inline&space;\sum_{j=0}^{M}y_j=1).
+
+![](https://latex.codecogs.com/svg.latex?...=\left&space;(&space;y_j&space;\frac{1}{u_j}&space;u_j&space;(1-u_j)&space;&plus;&space;\sum_{j=0}^{M}&space;y_j&space;\frac{1}{u_j}(-u_ju_j)))&space;\right&space;)v_s&space;=&space;\left&space;(&space;y_j&space;-&space;y_ju_j&space;-&space;\sum_{j=0}^{M}u_j&space;y_j)&space;\right&space;)v_s&space;=&space;(y_j&space;-&space;u_j)&space;v_s&space;=&space;\delta_j^{(2)}v_s)
+
+Отлично, мы нашли производную функции ошибки по выходному слою.
+
+### По скрытому слою
+
+![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{s,i}^{(1)}}=\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;u_j}&space;\frac{\partial&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}^M&space;\frac{y_j&space;}{u_j}&space;\frac{\partial&space;u_j(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}&space;\frac{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{s,i}^{(1)}}=...)
+
+![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial&space;u_j(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}) -
+производная от Softmax.
+
+![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{s,i}^{(1)}}&space;=&space;w_{j,s}^{(2)}&space;\frac{\partial&space;\phi^{(1)}\left&space;(&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)}{\partial&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i}&space;\frac{\partial&space;\phi^{(1)}\left&space;(&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)}{\partial&space;w_{s,i}^{(1)}}&space;=&space;w_{j,s}^{(2)}&space;\frac{\partial&space;\phi^{(1)}\left&space;(&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)}{\partial&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i}&space;x_i)
+
+Второй множитель - производная ReLU.
+
+![](https://latex.codecogs.com/svg.latex?...&space;=&space;(y_j&space;\frac{1}{u_j}&space;u_j&space;(1-u_j)&space;w_{j,s}^{(2)}&space;x_i&space;-&space;\sum_{j=0}^{M}y_j&space;\frac{1}{u_j}&space;u_j&space;u_j&space;w_{j,s}^{(2)}&space;x_i)\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=&space;(y_j&space;w_{j,s}^{(2)}&space;x_i&space;-&space;y_j&space;w_{j,s}^{(2)}&space;x_i&space;u_j&space;-&space;\sum_{j=0}^{M}y_j&space;u_j&space;w_{j,s}^{(2)}&space;x_i)&space;\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)&space;=&space;(y_j&space;w_{j,s}^{(2)}&space;x_i&space;-&space;u_j&space;w_{j,s}^{(2)}&space;x_i)&space;\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=&space;(y_j-u_j)w_{j,s}^{(2)}x_i\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=\delta_s^{(1)}w_{j,s}^{(2)}x_i\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;))
+
+Нашли производную функции ошибки по скрытому слою.
+
 
 ![](https://latex.codecogs.com/svg.latex?2)
 
