@@ -109,10 +109,11 @@
 
 1. Прямой проход по сети
     * Вычисляем ![](https://latex.codecogs.com/svg.latex?\inline&space;v_s,u_s)
-    * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\phi^{(1)}(\sum_{i=0}^{N}w_{s,i}^{(1)}x_i))
     * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i)
+    * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\phi^{(1)}(\sum_{i=0}^{N}w_{s,i}^{(1)}x_i))
     * Сохраянем ![](https://latex.codecogs.com/svg.latex?\inline&space;\phi^{(2)}(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s))
-    
+2. Вычисляем градиент *E(W)*
+3. Обратный проход с коррекцией весов: ![](https://latex.codecogs.com/svg.latex?w(k+1)=w(k)+\eta\nablaE)
 
 ![](https://latex.codecogs.com/svg.latex?2)
 
