@@ -13,7 +13,7 @@
 ## Математическая модель нейрона
 Математическая модель нейрона имеет следующий вид:
 
-![](https://latex.codecogs.com/svg.latex?u_k=b_k+\sum\limits_{j=1}{n}w_{k,j}x_j\qquad&space;y_k=\phi(u_k))
+![](https://latex.codecogs.com/svg.latex?u_k=b_k+\sum\limits_{j=1}^nw_{k,j}x_j\qquad&space;y_k=\phi(u_k))
 
 Где ![](https://latex.codecogs.com/svg.latex?\phi) - функция активации, ![](https://latex.codecogs.com/svg.latex?b_k) -
 смещение, ![](https://latex.codecogs.com/svg.latex?w_{k,j}) - вес, ![](https://latex.codecogs.com/svg.latex?x) - вход.
