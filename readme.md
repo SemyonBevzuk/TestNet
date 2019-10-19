@@ -21,7 +21,7 @@
 Для удобства выкладок сделаем некоторое преобразование. Внесем смещение в сумму с новым значением синапса ![](https://latex.codecogs.com/svg.latex?x_0=1).
 Тогда модель нейрона можно записать в следующем виде:
 
-![](https://latex.codecogs.com/svg.latex?u_k=\sum\limits_{j=0}nw_{k,j}x_j\qquad&space;y_k=\phi(u_k))
+![](https://latex.codecogs.com/svg.latex?u_k=\sum\limits_{j=0}^nw_{k,j}x_j\qquad&space;y_k=\phi(u_k))
 
 ## Предобработка данных
 Входные данные нормируются, представляются как матрицы и вектора.
@@ -40,7 +40,7 @@
 ### На выходном слое
 На выходе будем использовать функцию Softmax:
 
-![](https://latex.codecogs.com/svg.latex?\phi^{(2)}(u_j)=\frac{e{u_j}}{\sum\limits_{i=0}ne{u_i}})
+![](https://latex.codecogs.com/svg.latex?\phi^{(2)}(u_j)=\frac{e{u_j}}{\sum\limits_{i=0}^ne{u_i}})
 
 Её производные:
 
@@ -51,11 +51,11 @@
 ## Функция ошибки
 В качестве функции ошибки рассмотрим кросс-энтропию:
 
-![](https://latex.codecogs.com/svg.latex?E(w)=\sum\limits_{j=1}My_j\ln{u_j})
+![](https://latex.codecogs.com/svg.latex?E(w)=\sum\limits_{j=1}^My_j\ln{u_j})
 
-![](https://latex.codecogs.com/svg.latex?u_j&space;=&space;\phi^{(2)}\left&space;(\sum_{s=0}{K}w_{j,s}^{(2)}v_s&space;\right&space;))
+![](https://latex.codecogs.com/svg.latex?u_j&space;=&space;\phi^{(2)}\left&space;(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s&space;\right&space;))
 
-![](https://latex.codecogs.com/svg.latex?v_s&space;=&space;\phi^{(1)}\left&space;(\sum_{i=0}{N}w_{s,i}^{(1)}x_i&space;\right&space;))
+![](https://latex.codecogs.com/svg.latex?v_s&space;=&space;\phi^{(1)}\left&space;(\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;))
 
 Где *y* - выход сети, *u* - ожидаемый выход, *v* - выход скрытого слоя, *x* - вход сети, *M* - число нейронов на выходном слое,
 *K* - число нейронов на скрытом слое, *N* - число нейронов на входе сети, ![](https://latex.codecogs.com/svg.latex?\inline&space;w_{j,s}^{(2)}) -
@@ -65,7 +65,7 @@
 ## Производные функции ошибки
 ### По выходному слою
 
-![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{j,s}^{(2)}}=\sum\limits_{j=0}M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial{w_{j,s}^{(2)}}}&space;=&space;\sum\limits_{j=0}M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial{u_j}}&space;\frac{\partial&space;u_j}{\partial&space;w_{j,s}^{(2)}}=...)
+![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{j,s}^{(2)}}=\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial{w_{j,s}^{(2)}}}&space;=&space;\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial{u_j}}&space;\frac{\partial&space;u_j}{\partial&space;w_{j,s}^{(2)}}=...)
 
 ![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;\ln&space;u_j}{\partial&space;u_j}&space;=&space;\frac{1}{u_j})
 
@@ -83,7 +83,7 @@
 
 ### По скрытому слою
 
-![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{s,i}^{(1)}}=\sum\limits_{j=0}M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;u_j}&space;\frac{\partial&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}M&space;\frac{y_j&space;}{u_j}&space;\frac{\partial&space;u_j(\sum_{s=0}{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}&space;\frac{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{s,i}^{(1)}}=...)
+![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{s,i}^{(1)}}=\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;u_j}&space;\frac{\partial&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}^M&space;\frac{y_j&space;}{u_j}&space;\frac{\partial&space;u_j(\sum_{s=0}{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}&space;\frac{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{s,i}^{(1)}}=...)
 
 ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial&space;u_j(\sum_{s=0}{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}) -
 производная от Softmax.
