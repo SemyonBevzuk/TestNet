@@ -13,7 +13,7 @@
 ## Математическая модель нейрона
 Математическая модель нейрона имеет следующий вид:
 
-![](https://latex.codecogs.com/svg.latex?u_k=b_k+\sum\limits_{j=1}nw_{k,j}x_j\qquad&space;y_k=\phi(u_k))
+![](https://latex.codecogs.com/svg.latex?u_k=b_k+\sum\limits_{j=1}{n}w_{k,j}x_j\qquad&space;y_k=\phi(u_k))
 
 Где ![](https://latex.codecogs.com/svg.latex?\phi) - функция активации, ![](https://latex.codecogs.com/svg.latex?b_k) -
 смещение, ![](https://latex.codecogs.com/svg.latex?w_{k,j}) - вес, ![](https://latex.codecogs.com/svg.latex?x) - вход.
@@ -72,7 +72,7 @@
 ![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;u_j}{\partial&space;w_{j,s}^{(2)}}&space;=&space;\frac{\partial&space;u_j(\sum_{s=0}{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}&space;\frac{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{j,s}^{(2)}}&space;=&space;\frac{\partial&space;u_j(\sum_{s=0}{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}{K}w_{j,s}^{(2)}v_s}&space;v_s)
 
 Первый множитель - это производная Softmax по аргументу. Она может принимать два значения, это зависит от слагаемого,
-по которому мы берем производную. Если он в числителе: ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial\phi{(2)}(u_j)}{\partial{u_j}}=\phi{(2)}(u_j)(1-\phi{(2)}(u_j))).
+по которому мы берем производную. Если он в числителе: ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial\phi^{(2)}(u_j)}{\partial{u_j}}=\phi^{(2)}(u_j)(1-\phi^{(2)}(u_j))).
 Если в знаменателе: ![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial\phi^{(2)}(u_j)}{\partial{u_i}}=-\phi^{(2)}(u_j)\phi^{(2)}(u_i)).
 
 Вынесем из суммы слагаемое, которое соответствует производной по числителю Softmax. Учтем, что ![](https://latex.codecogs.com/svg.latex?\inline&space;\sum_{j=0}{M}y_j=1).
