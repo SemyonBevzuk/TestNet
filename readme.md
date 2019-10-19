@@ -40,7 +40,7 @@
 ### На выходном слое
 На выходе будем использовать функцию Softmax:
 
-![](https://latex.codecogs.com/svg.latex?\phi^{(2)}(u_j)=\frac{e{u_j}}{\sum\limits_{i=0}^ne{u_i}})
+![](https://latex.codecogs.com/svg.latex?\phi^{(2)}(u_j)=\frac{e^{u_j}}{\sum\limits_{i=0}^ne^{u_i}})
 
 Её производные:
 
