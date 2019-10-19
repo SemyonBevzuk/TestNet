@@ -77,7 +77,7 @@
 
 Вынесем из суммы слагаемое, которое соответствует производной по числителю Softmax. Учтем, что ![](https://latex.codecogs.com/svg.latex?\inline&space;\sum_{j=0}^{M}y_j=1).
 
-![](https://latex.codecogs.com/svg.latex?...=\left(y_j\frac{1}{u_j}u_j(1-u_j)+\sum_{j=0}^{M}y_j\frac{1}{u_j}(-u_ju_j)\right)v_s=\left(y_j-y_ju_j-\sum_{j=0}^{M}u_jy_j\right)v_s=(y_j-u_j)v_s=\delta_j{(2)}v_s)
+![](https://latex.codecogs.com/svg.latex?...=\left(y_j\frac{1}{u_j}u_j(1-u_j)+\sum_{j=0}^{M}y_j\frac{1}{u_j}(-u_ju_j)\right)v_s=\left(y_j-y_ju_j-\sum_{j=0}^{M}u_jy_j\right)v_s=(y_j-u_j)v_s=\delta_j^{(2)}v_s)
 
 Отлично, мы нашли производную функции ошибки по выходному слою.
 
@@ -85,15 +85,14 @@
 
 ![](https://latex.codecogs.com/svg.latex?\frac{\partial&space;E(w)}{\partial&space;w_{s,i}^{(1)}}=\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}^M&space;y_j&space;\frac{\partial&space;\ln&space;u_j}{\partial&space;u_j}&space;\frac{\partial&space;u_j}{\partial&space;w_{s,i}^{(1)}}&space;=&space;\sum\limits_{j=0}^M&space;\frac{y_j&space;}{u_j}&space;\frac{\partial&space;u_j(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}&space;\frac{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{s,i}^{(1)}}=...)
 
-![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial&space;u_j(\sum_{s=0}^
-{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}) -
+![](https://latex.codecogs.com/svg.latex?\inline&space;\frac{\partial&space;u_j(\sum_{s=0}^{K}w_{j,s}^{(2)}v_s)}{\partial&space;\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}) -
 производная от Softmax.
 
 ![](https://latex.codecogs.com/svg.latex?\frac{\partial\sum_{s=0}^{K}w_{j,s}^{(2)}v_s}{\partial&space;w_{s,i}^{(1)}}&space;=&space;w_{j,s}^{(2)}&space;\frac{\partial&space;\phi^{(1)}\left&space;(&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)}{\partial&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i}&space;\frac{\partial&space;\phi^{(1)}\left&space;(&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)}{\partial&space;w_{s,i}^{(1)}}&space;=&space;w_{j,s}^{(2)}&space;\frac{\partial&space;\phi^{(1)}\left&space;(&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)}{\partial&space;\sum_{s=0}^{N}w_{s,i}^{(1)}x_i}&space;x_i)
 
 Второй множитель - производная ReLU.
 
-![](https://latex.codecogs.com/svg.latex?...=(y_j&space;\frac{1}{u_j}&space;u_j&space;(1-u_j)&space;w_{j,s}^{(2)}&space;x_i&space;-&space;\sum_{j=0}^{M}y_j&space;\frac{1}{u_j}&space;u_j&space;u_j&space;w_{j,s}^{(2)}&space;x_i)\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=&space;(y_j&space;w_{j,s}^{(2)}&space;x_i&space;-&space;y_j&space;w_{j,s}^{(2)}&space;x_i&space;u_j&space;-&space;\sum_{j=0}^{M}y_j&space;u_j&space;w_{j,s}^{(2)}&space;x_i)&space;\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)&space;=&space;(y_j&space;w_{j,s}^{(2)}&space;x_i&space;-&space;u_j&space;w_{j,s}^{(2)}&space;x_i)&space;\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=&space;(y_j-u_j)w_{j,s}^{(2)}x_i\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=\delta_s{(1)}x_i\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;))
+![](https://latex.codecogs.com/svg.latex?...=(y_j&space;\frac{1}{u_j}&space;u_j&space;(1-u_j)&space;w_{j,s}^{(2)}&space;x_i&space;-&space;\sum_{j=0}^{M}y_j&space;\frac{1}{u_j}&space;u_j&space;u_j&space;w_{j,s}^{(2)}&space;x_i)\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=&space;(y_j&space;w_{j,s}^{(2)}&space;x_i&space;-&space;y_j&space;w_{j,s}^{(2)}&space;x_i&space;u_j&space;-&space;\sum_{j=0}^{M}y_j&space;u_j&space;w_{j,s}^{(2)}&space;x_i)&space;\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)&space;=&space;(y_j&space;w_{j,s}^{(2)}&space;x_i&space;-&space;u_j&space;w_{j,s}^{(2)}&space;x_i)&space;\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=&space;(y_j-u_j)w_{j,s}^{(2)}x_i\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;)=\delta_s^{(1)}x_i\dot{\phi^{(1)}}\left&space;(&space;\sum_{i=0}^{N}w_{s,i}^{(1)}x_i&space;\right&space;))
 
 Нашли производную функции ошибки по скрытому слою.
 
