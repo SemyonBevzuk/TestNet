@@ -195,6 +195,22 @@ datetime - для замера времени работы
 | keras_net | 20.960236 | 0.965699        | 0.114408  | 0.975350         | 0.086029   |
 
 Параметры запуска:
+* hidden_size = 128
+* lr = 0.1
+* batch_size = 128
+* number_epochs = 20
+
+Командная строка:
+
+    python main.py --net_type my --hidden_size 128 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
+
+
+|           | Time(s)   | Test accuracy(%)| Test loss | Train accuracy(%)| Train loss | 
+|:--------- |:---------:| :--------------:|:---------:|:----------------:|:----------:|
+| my_net    | 41.901075 | 0.9756          | 0.078803  | 0.988916         | 0.044473   |
+| keras_net | 26.540353 | 0.976100        | 0.077987  | 0.988150         | 0.046889   |
+
+Параметры запуска:
 * hidden_size = 256
 * lr = 0.1
 * batch_size = 128
