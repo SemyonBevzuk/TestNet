@@ -130,6 +130,8 @@
         
 ## Описание реализации
 ### Внешние зависимости
+tensorflow - основа для Keras
+
 keras - фреймворк для сравнения реализаций
 
 numpy - для работы с векторами и матрицами
@@ -188,7 +190,6 @@ datetime - для замера времени работы
 
     python main.py --net_type my --hidden_size 30 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
 
-
 |           | Time(s)   | Test accuracy(%)| Test loss | Train accuracy(%)| Train loss | 
 |:--------- |:---------:| :--------------:|:---------:|:----------------:|:----------:|
 | my_net    | 25.023557 | 0.9648          | 0.122476  | 0.974233         | 0.090380   |
@@ -203,7 +204,6 @@ datetime - для замера времени работы
 Командная строка:
 
     python main.py --net_type my --hidden_size 128 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
-
 
 |           | Time(s)   | Test accuracy(%)| Test loss | Train accuracy(%)| Train loss | 
 |:--------- |:---------:| :--------------:|:---------:|:----------------:|:----------:|
@@ -220,7 +220,6 @@ datetime - для замера времени работы
 
     python main.py --net_type my --hidden_size 256 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
 
-
 |           | Time(s)   | Test accuracy(%)| Test loss | Train accuracy(%)| Train loss | 
 |:--------- |:---------:| :--------------:|:---------:|:----------------:|:----------:|
 | my_net    | 64.535192 | 0.978000        | 0.071693  | 0.991483         | 0.036636   |
@@ -235,7 +234,6 @@ datetime - для замера времени работы
 Командная строка:
 
     python main.py --net_type my --hidden_size 300 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
-
 
 |           | Time(s)    | Test accuracy(%)| Test loss | Train accuracy(%)| Train loss | 
 |:--------- |:----------:| :--------------:|:---------:|:----------------:|:----------:|
