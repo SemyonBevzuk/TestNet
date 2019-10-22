@@ -129,7 +129,7 @@ def fit_and_test_net_on_MNIST(hidden_size=30, batch_size=128, num_epochs=20, lr=
 
 
 if __name__ == '__main__':
-    score_train, score_test, delta_time = fit_and_test_net_on_MNIST(30, 128, 20, 0.1)
+    score_train, score_test, delta_time = fit_and_test_net_on_MNIST(300, 128, 20, 0.1)
     print()
     print('Delta time =', delta_time)
     print('Test loss:', score_test[0])
