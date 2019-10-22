@@ -16,11 +16,11 @@ def fit_and_test_net_on_MNIST(hidden_size=30, batch_size=128, num_epochs=20, lr=
     model = Model(input=inp, output=out)  # To define a model, just specify its input and output layers
     sgd = optimizers.SGD(lr=lr, momentum=0.0, nesterov=False)
 
-    model.compile(loss='categorical_crossentropy',  # using the cross-entropy loss function
-                  optimizer=sgd,  # using the SGD optimiser
-                  metrics=['accuracy'])  # reporting the accuracy
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=sgd,
+                  metrics=['accuracy'])
 
-    model.fit(X_train, Y_train,  # Train the model using the training set...
+    model.fit(X_train, Y_train,
               batch_size=batch_size, nb_epoch=num_epochs,
               verbose=2)
 
