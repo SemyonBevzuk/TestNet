@@ -35,7 +35,7 @@ class NeuralNetwork:
 
         return crossentropy, accuracy
 
-    def fit(self, X, Y, batch_size=128, number_epochs=1000):
+    def fit(self, X, Y, batch_size=128, number_epochs=10):
         np.random.seed(1)
         self._batch_size = batch_size
         self._n = X.shape[0]
@@ -47,7 +47,7 @@ class NeuralNetwork:
             X, Y = self._shuffle_arrays_together(X, Y)
             for i in range(0, self._n, self._batch_size):
                 U, storage = self._fit_forward(X[i:i + self._batch_size])
-                dW1, dW2, db1, db2 = self._calculate_derivatives(X[i:i + self._batch_size], Y[i:i + self._batch_size], storage)
+                dW1, dW2, db1, db2 = self._calculate_derivatives(X[i:i + self._batch_size], Y[i:i + self._batch_size], U, storage)
                 self._W1 = self._W1 + self._lr * dW1
                 self._W2 = self._W2 + self._lr * dW2
                 self._b1 = self._b1 + self._lr * db1
@@ -72,18 +72,17 @@ class NeuralNetwork:
         X = X.T
         WX = self._W1.dot(X) + self._b1
         X = self._ReLU(WX)
-        storage['X1'] = X
+        storage['V'] = X
         storage['WX1'] = WX
 
         WX = self._W2.dot(X) + self._b2
         X = self._Softmax(WX)
-        storage['X2'] = X
 
         return X, storage
 
-    def _calculate_derivatives(self, X0, Y, storage):
-        delta_2 = Y.T - storage['X2']  # Y - U
-        dW2 = delta_2.dot(storage['X1'].T) / self._batch_size
+    def _calculate_derivatives(self, X0, Y, U, storage):
+        delta_2 = Y.T - U
+        dW2 = delta_2.dot(storage['V'].T) / self._batch_size
         db2 = np.sum(delta_2, axis=1, keepdims=True) / self._batch_size
 
         delta_1 = self._W2.T.dot(delta_2) * self._ReLU_derivative(storage['WX1'])
@@ -129,7 +128,7 @@ def fit_and_test_net_on_MNIST(hidden_size=30, batch_size=128, num_epochs=20, lr=
 
 
 if __name__ == '__main__':
-    score_train, score_test, delta_time = fit_and_test_net_on_MNIST(30, 128, 20, 0.1)
+    score_train, score_test, delta_time = fit_and_test_net_on_MNIST(20, 128, 20, 0.1)
     print()
     print('Delta time =', delta_time)
     print('Test loss:', score_test[0])
