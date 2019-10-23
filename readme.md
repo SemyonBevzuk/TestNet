@@ -249,7 +249,7 @@ datetime - для замера времени работы
 
 Командная строка:
 
-    python main.py --net_type my --hidden_size 300 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
+    python main.py --net_type my --hidden_size 512 --lr 0.1 --batch_size 128 --number_epochs 20 --compare_nets
 
 |           | Time(s)    | Test accuracy(%)| Test loss | Train accuracy(%)| Train loss | 
 |:--------- |:----------:| :--------------:|:---------:|:----------------:|:----------:|
